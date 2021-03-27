@@ -4,7 +4,7 @@ const explorer = document.querySelector('#explorer');
 
 let explorerFiles = [];
 
-let url = '../';
+let url = './';
 
 updateExplorer(url);
 
@@ -24,20 +24,23 @@ function updateExplorer() {
     .then(resp => resp.json())
     .then(files => {
 
+      console.log(files);
+
       explorer.innerHTML = '';
 
-      files.forEach(fileName => {
+      files.forEach(fileObject => {
 
         let file = document.createElement('div');
         file.className = 'file';
 
         let fileImage = document.createElement('img');
         fileImage.className = 'file-image';
-        fileImage.src = 'media/img/folder.png';
+
+        fileImage.src = (fileObject.type == 'dir') ? 'media/img/folder.png' : 'media/img/file.png';
 
         let fileTitle = document.createElement('p');
         fileTitle.className = 'file-title';
-        fileTitle.textContent = fileName;
+        fileTitle.textContent = fileObject.name;
 
         file.append(fileImage, fileTitle);
         explorer.append(file);
